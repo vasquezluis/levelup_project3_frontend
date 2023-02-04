@@ -1,10 +1,12 @@
 import "./App.css";
-import Card from "./components/Card";
+import ProductsForm from "./components/productsForm";
+import ProductsList from "./components/productsList";
 
 function App() {
   return (
     <div className="App">
-      <Card />
+      <ProductsForm />
+      <ProductsList />
     </div>
   );
 }
