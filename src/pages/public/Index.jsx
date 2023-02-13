@@ -52,14 +52,18 @@ function Index() {
             src={movieToShow.poster}
             alt={movieToShow.name}
           />
-          <div className="flex flex-col pl-10 pt-10">
-            <h2 className=" text-3xl font-bold">{movieToShow.name}</h2>
-            <p>Sinopsis: {movieToShow.description}</p>
-            <p>Horario: {movieToShow.schedules[0].schedule} P.M.</p>
+          <div className="flex flex-col pl-10 pt-10 max-w-sm">
+            <h2 className=" text-3xl font-bold mb-4">{movieToShow.name}</h2>
+            <p className="mb-4">Sinopsis: {movieToShow.description.substring(0, 200)}...</p>
             <p>
               Genero:
               {movieToShow.genders.map((item, index) => (
-                <span key={index}> {item}</span>
+                <span
+                  className="text-gray-900 bg-gray-200 px-1 mx-1 rounded-md"
+                  key={index}
+                >
+                  {item}
+                </span>
               ))}
             </p>
           </div>
@@ -71,14 +75,18 @@ function Index() {
             src={movieToShow2.poster}
             alt={movieToShow2.name}
           />
-          <div className="flex flex-col pl-10 pt-10">
-            <h2 className="text-3xl font-bold">{movieToShow2.name}</h2>
-            <p>Sinopsis: {movieToShow2.description}</p>
-            <p>Horario: {movieToShow2.schedules[0].schedule} P.M.</p>
+          <div className="flex flex-col pl-10 pt-10 max-w-sm">
+            <h2 className="text-3xl font-bold mb-4">{movieToShow2.name}</h2>
+            <p className="mb-4">Sinopsis: {movieToShow2.description.substring(0, 200)}...</p>
             <p>
               Genero:
               {movieToShow2.genders.map((item, index) => (
-                <span key={index}> {item}</span>
+                <span
+                  className="text-gray-900 bg-gray-200 px-1 mx-1 rounded-md"
+                  key={index}
+                >
+                  {item}
+                </span>
               ))}
             </p>
           </div>
