@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useOutlet } from "react-router-dom";
 import { getItems } from "../../api/moviesAPI";
-import MoviesList from "../../components/movies/MoviesList";
+import MovieCard from "../../components/movies/MovieCard";
 import PageNavbar from "../../components/_partials/PageNavBar";
 
 function Cartelera() {
@@ -40,7 +40,7 @@ function Cartelera() {
 
   // * page creation
   return (
-    <>
+    <div className="max-w-full max-h-full">
       <div className="bg-gray-900 flex flex-col pt-5 pb-2 items-center w-full">
         <p className="text-3xl font-bold">Cartelera</p>
       </div>
@@ -48,18 +48,22 @@ function Cartelera() {
       <PageNavbar items={links} />
 
       <div className="grid md:grid-cols-5 lg:grid-cols-7">
-        {movies.map((movie, index) => (
-          <MoviesList
-            key={index}
-            name={movie.name}
-            poster={movie.poster}
-            sinopsis={movie.description}
-            genders={movie.genders}
-            schedules={movie.schedules}
-          />
-        ))}
+        {movies.map((movie, index) => {
+          if (movie.active) {
+            return (
+              <MovieCard
+                key={index}
+                name={movie.name}
+                poster={movie.poster}
+                sinopsis={movie.description}
+                genders={movie.genders}
+                schedules={movie.schedules}
+              />
+            );
+          }
+        })}
       </div>
-    </>
+    </div>
   );
 }
 
