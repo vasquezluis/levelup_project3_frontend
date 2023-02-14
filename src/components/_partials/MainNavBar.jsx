@@ -19,7 +19,7 @@ function MainNavbar() {
     },
     {
       title: "Mi Perfil",
-      url: "/perfil",
+      url: "/profile",
       icon: <RiUserFill />,
     },
     {
