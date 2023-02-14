@@ -10,6 +10,12 @@ const moviesAPI = axios.create({
  * * endpoints functions
  */
 
+export const getItem = async (movieName) => {
+  const response = await moviesAPI.get(`/${movieName}`);
+
+  return response.data.body;
+};
+
 export const getItems = async () => {
   const response = await moviesAPI.get("/");
 
