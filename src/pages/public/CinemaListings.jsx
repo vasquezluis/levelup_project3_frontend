@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useOutlet } from "react-router-dom";
 import { getItems } from "../../api/moviesAPI";
@@ -51,14 +52,15 @@ function Cartelera() {
         {movies.map((movie, index) => {
           if (movie.active) {
             return (
-              <MovieCard
-                key={index}
-                name={movie.name}
-                poster={movie.poster}
-                sinopsis={movie.description}
-                genders={movie.genders}
-                schedules={movie.schedules}
-              />
+              <Link to={`/cartelera/${movie.name}`} key={index}>
+                <MovieCard
+                  name={movie.name}
+                  poster={movie.poster}
+                  sinopsis={movie.description}
+                  genders={movie.genders}
+                  schedules={movie.schedules}
+                />
+              </Link>
             );
           }
         })}
