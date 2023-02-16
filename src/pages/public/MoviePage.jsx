@@ -19,7 +19,9 @@ function MoviePage() {
   ];
 
   // ? id from url
-  const { movieName } = useParams();
+  const { id } = useParams();
+
+  console.log(id);
 
   const {
     isLoading,
@@ -28,7 +30,7 @@ function MoviePage() {
     error,
   } = useQuery({
     queryKey: ["movie"],
-    queryFn: () => getItem(movieName),
+    queryFn: () => getItem(id),
   });
 
   if (isLoading) return <div>Loading...</div>;
