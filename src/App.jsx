@@ -4,7 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 
 // * components
-import MainNavBar from "./components/_partials/MainNavBar";
+import Sidebar from "./components/_partials/SideBar";
+import Navbar from "./components/_partials/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 // * pages
@@ -30,50 +31,46 @@ function App() {
   };
 
   const logout = () => setUser(null);
+  const activeMenu = true;
 
   return (
     <BrowserRouter>
-      <div className="flex h-screen">
-        <div>
-          <MainNavBar />
+      <div className="flex relative dark:bg-main-dark-bg">
+        {/* sidebar control */}
+        {activeMenu ? (
+          <div className="w-72 fixed dark:bg-secondary-dark-bg bg-white">
+            <Sidebar />
+          </div>
+        ) : (
+          <div className="w-0 dark:bg-secondary-dark-bg">
+            <Sidebar />
+          </div>
+        )}
 
-          {user ? (
-            <button onClick={logout}>Logout</button>
-          ) : (
-            <button onClick={login}>Login</button>
-          )}
+        {/* navbar div */}
+        <div
+          className={`dark:bg-main-bg bg-main-bg min-h-screen w-full ${
+            activeMenu ? "md:ml-72" : "flex-2"
+          }`}
+        >
+          <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full">
+            <Navbar />
+          </div>
         </div>
 
-        <div className="p-2 w-screen h-screen">
+        {/* Routing */}
+        <div>
           <Routes>
-            {/* Public Routes */}
-            <Route index element={<Index />} />
-            <Route path="/cartelera/:movieName" element={<MoviePage />} />
+            {/* Public pages */}
+            <Route path="/" element={<Index />} />
+            <Route path="/index" element={<Index />} />
+
+            <Route path="/cartelera/:id" element={<MoviePage />} />
             <Route path="/cartelera" element={<CinemaListings />} />
 
-            {/* Protected Routes | Outlet */}
-            <Route element={<ProtectedRoute isAllowed={!!user} />}>
-              <Route path="/profile" element={<UserDashboard />} />
-            </Route>
-
-            {/* Proyected Routes | children */}
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute
-                  isAllowed={!!user && user.permission.includes("admin")}
-                  redirecTo="/"
-                >
-                  <AdminDashboard />
-                </ProtectedRoute>
-              }
-            />
-
-            {/* Not found */}
-            <Route
-              path="*"
-              element={<p className="text-3xl text-black">Not Found</p>}
-            />
+            {/* Private pages */}
+            <Route path="/admindash" element={<AdminDashboard />} />
+            <Route path="/userdash" element={<UserDashboard />} />
           </Routes>
         </div>
       </div>
