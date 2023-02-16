@@ -36,7 +36,7 @@ function Index() {
 
   return (
     <div className="h-full w-full">
-      <div className="bg-gray-900 flex flex-col w-full items-center py-5">
+      <div className="bg-main-dark-bg flex flex-col w-full items-center py-5">
         <p className="text-4xl font-bold ">Peliculas destacadas</p>
         <p className="py-3">
           Cada semana te traemos las mejores peliculas internacionales del
@@ -54,7 +54,9 @@ function Index() {
           />
           <div className="flex flex-col pl-10 pt-10 max-w-sm">
             <h2 className=" text-3xl font-bold mb-4">{movieToShow.name}</h2>
-            <p className="mb-4">Sinopsis: {movieToShow.description.substring(0, 200)}...</p>
+            <p className="mb-4">
+              Sinopsis: {movieToShow.description.substring(0, 200)}...
+            </p>
             <p>
               Genero:
               {movieToShow.genders.map((item, index) => (
@@ -77,7 +79,9 @@ function Index() {
           />
           <div className="flex flex-col pl-10 pt-10 max-w-sm">
             <h2 className="text-3xl font-bold mb-4">{movieToShow2.name}</h2>
-            <p className="mb-4">Sinopsis: {movieToShow2.description.substring(0, 200)}...</p>
+            <p className="mb-4">
+              Sinopsis: {movieToShow2.description.substring(0, 200)}...
+            </p>
             <p>
               Genero:
               {movieToShow2.genders.map((item, index) => (
