@@ -31,7 +31,7 @@ function Cartelera() {
 
     queryFn: getItems, //* execute function
 
-    select: (products) => products.reverse(), //* can use for sort items (optional)
+    select: (items) => items.reverse(), //* can use for sort items (optional)
   });
 
   const queryClient = useQueryClient(); //* method for reload items
@@ -48,11 +48,14 @@ function Cartelera() {
 
       <PageNavbar items={links} />
 
-      <div className="grid md:grid-cols-5 lg:grid-cols-7">
+      <div className="bg-gray-400 grid md:grid-cols-5 lg:grid-cols-7">
         {movies.map((movie, index) => {
+          {
+            console.log(`/cartelera/${movie._id}`);
+          }
           if (movie.active) {
             return (
-              <Link to={`/cartelera/${movie.name}`} key={index}>
+              <Link to={`/cartelera/${movie._id}`} key={index}>
                 <MovieCard
                   name={movie.name}
                   poster={movie.poster}
