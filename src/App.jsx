@@ -47,31 +47,32 @@ function App() {
           </div>
         )}
 
-        {/* navbar div */}
+        {/* Right side div */}
         <div
-          className={`dark:bg-main-bg bg-main-bg min-h-screen w-full ${
+          className={`dark:bg-main-bg bg-gray-200 min-h-screen w-full ${
             activeMenu ? "md:ml-72" : "flex-2"
           }`}
         >
+          {/* navbar div */}
           <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full">
             <Navbar />
           </div>
-        </div>
 
-        {/* Routing */}
-        <div>
-          <Routes>
-            {/* Public pages */}
-            <Route path="/" element={<Index />} />
-            <Route path="/index" element={<Index />} />
+          {/* Routing */}
+          <div>
+            <Routes>
+              {/* Public pages */}
+              <Route path="/" element={<Index />} />
+              <Route path="/index" element={<Index />} />
 
-            <Route path="/cartelera/:id" element={<MoviePage />} />
-            <Route path="/cartelera" element={<CinemaListings />} />
+              <Route path="/cartelera/:id" element={<MoviePage />} />
+              <Route path="/cartelera" element={<CinemaListings />} />
 
-            {/* Private pages */}
-            <Route path="/admindash" element={<AdminDashboard />} />
-            <Route path="/userdash" element={<UserDashboard />} />
-          </Routes>
+              {/* Private pages */}
+              <Route path="/admindash" element={<AdminDashboard />} />
+              <Route path="/userdash" element={<UserDashboard />} />
+            </Routes>
+          </div>
         </div>
       </div>
     </BrowserRouter>
