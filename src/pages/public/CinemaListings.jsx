@@ -41,32 +41,34 @@ function Cartelera() {
 
   // * page creation
   return (
-    <div className="max-w-full max-h-full">
-      <div className="bg-gray-900 flex flex-col pt-5 pb-2 items-center w-full">
-        <p className="text-3xl font-bold">Cartelera</p>
-      </div>
+    <div className="mt-5">
+      <div className="flex flex-wrap lg:flex-wrap justify-center">
+        {/* title section */}
+        <div className="flex m-3 flex-wrap justify-center gap-1">
+          <p className="text-3xl font-bold">Peliculas disponibles</p>
+        </div>
 
-      <PageNavbar items={links} />
-
-      <div className="bg-gray-400 grid md:grid-cols-5 lg:grid-cols-7">
-        {movies.map((movie, index) => {
-          {
-            console.log(`/cartelera/${movie._id}`);
-          }
-          if (movie.active) {
-            return (
-              <Link to={`/cartelera/${movie._id}`} key={index}>
-                <MovieCard
-                  name={movie.name}
-                  poster={movie.poster}
-                  sinopsis={movie.description}
-                  genders={movie.genders}
-                  schedules={movie.schedules}
-                />
-              </Link>
-            );
-          }
-        })}
+        {/* movies list section */}
+        {/* <div className="flex m-3 flex-wrap w-full justify-center gap-1"> */}
+        <div className="p-2">
+          <div className="bg-white grid md:grid-cols-5 lg:grid-cols-7">
+            {movies.map((movie, index) => {
+              if (movie.active) {
+                return (
+                  <Link to={`/cartelera/${movie._id}`} key={index}>
+                    <MovieCard
+                      name={movie.name}
+                      poster={movie.poster}
+                      sinopsis={movie.description}
+                      genders={movie.genders}
+                      schedules={movie.schedules}
+                    />
+                  </Link>
+                );
+              }
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );
