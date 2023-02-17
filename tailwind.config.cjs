@@ -40,7 +40,8 @@ module.exports = {
         590: "590px",
       },
       backgroundImage: {
-        "hero-pattern": "url('https://i.ibb.co/MkvLDfb/Rectangle-4389.png')",
+        "hero-pattern":
+          "url('https://res.cloudinary.com/dh01roref/image/upload/v1676580142/levelup_project3/hero_n4twe2.webp')",
       },
     },
   },
