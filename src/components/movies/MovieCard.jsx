@@ -1,4 +1,4 @@
-function MoviesList({ name, poster, sinopsis, genders, schedules }) {
+function MovieCard({ name, poster, sinopsis, genders, schedules }) {
   return (
     <div className="max-h-fit rounded overflow-hidden shadow-lg p-2 m-1 bg-gray-50 text-black hover:scale-110 hover:text-white hover:bg-gray-900 duration-75 cursor-pointer">
       <div className="flex flex-col items-center">
@@ -19,4 +19,4 @@ function MoviesList({ name, poster, sinopsis, genders, schedules }) {
   );
 }
 
-export default MoviesList;
+export default MovieCard;
