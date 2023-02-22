@@ -11,6 +11,8 @@ import { createItem } from "../../api/reservationsAPI";
 function MoviePage() {
   // TODO movie id from url
   const { id } = useParams();
+  // TODO userId from context
+  const userId = "63f441955be6f3e55ca082b8";
 
   // TODO connection to movieAPI
   const {
@@ -122,7 +124,7 @@ function MoviePage() {
       alert("No has seleccionado una butaca u horario");
     } else {
       const reservationData = {
-        userId: "63e9864ca32c939bac4279f3",
+        userId,
         movieId: movie._id,
         schedule: schedule,
         seats: seats,
@@ -157,21 +159,28 @@ function MoviePage() {
           </div>
           {/* other section */}
           <div className="w-auto px-10 flex flex-col justify-end">
-            <p className="text-3xl font-bold mb-3">Reserva disponible</p>
+            <p className="text-3xl font-bold mb-3">Trailer</p>
 
-            {movie.schedules.map((item, index) => (
-              <div key={index} className="rounded p-2 m-1 bg-gray-300">
-                <p>Costo: {movie.cost} creditos</p>
-                <p>Horario: {item.schedule}</p>
-                <p>Fecha: {dateFormat(item.date, "mmmm dS, yyyy")}</p>
-                <p>Sala: {item.cinema}</p>
-              </div>
-            ))}
+            {/* Trailer from youtube */}
+            <div className="aspect-w-16 aspect-h-9">
+              {movie.trailer ? (
+                <iframe
+                  width="420"
+                  height="236"
+                  src={`${movie.trailer}`}
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen;"
+                ></iframe>
+              ) : (
+                <p>Trailer no disponible</p>
+              )}
+            </div>
           </div>
         </div>
 
         {/* Reservation section */}
-        <div className="flex flex-wrap p-5 mt-2 items-center bg-white text-black justify-center">
+        <div className="flex flex-wrap p-5 mt-2 items-center bg-white text-black justify-center mb-5">
           {/* section title */}
           <div className="w-full py-10 flex gap-5 justify-center">
             <p className="text-3xl font-bold">Reserva la pelicula!</p>
