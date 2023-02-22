@@ -10,6 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 // * pages
 import Index from "./pages/public/Index";
+import SignUser from "./pages/public/SignUser";
 import CinemaListings from "./pages/public/CinemaListings";
 import UserDashboard from "./pages/private/UserDashboard";
 import AdminDashboard from "./pages/private/AdminDashboard";
@@ -64,6 +65,7 @@ function App() {
               {/* Public pages */}
               <Route path="/" element={<Index />} />
               <Route path="/index" element={<Index />} />
+              <Route path="/login" element={<SignUser />} />
 
               <Route path="/cartelera/:id" element={<MoviePage />} />
               <Route path="/cartelera" element={<CinemaListings />} />
