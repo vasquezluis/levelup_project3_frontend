@@ -28,13 +28,16 @@ function MoviesForm() {
     const formData = new FormData(e.target); // ? getting form data
     const movie = Object.fromEntries(formData); // ? creatind product object from formData
 
+    if (movie.gender2 == "") {
+      movie.gender2 = null;
+    }
+    if (movie.gender3 == "") {
+      movie.gender3 = null;
+    }
+
     const newMovieData = {
       ...movie,
-      genders: [
-        movie.gender1,
-        movie.gender2 ? movie.gender2 : null,
-        movie.gender3 ? movie.gender3 : null,
-      ],
+      genders: [movie.gender1, movie.gender2, movie.gender3],
       schedules: [
         { schedule: movie.schedule1, date: movie.date1, cinema: movie.cinema1 },
         { schedule: movie.schedule2, date: movie.date2, cinema: movie.cinema2 },
@@ -58,11 +61,12 @@ function MoviesForm() {
             Titulo
           </label>
           <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
             id="name"
             name="name"
             type="text"
             placeholder="Piratas del Caribe"
+            required
           />
         </div>
         <div className="w-full md:w-1/2 px-3">
@@ -78,6 +82,7 @@ function MoviesForm() {
             name="cost"
             type="number"
             placeholder="180"
+            required
           />
         </div>
       </div>
@@ -96,6 +101,7 @@ function MoviesForm() {
             name="description"
             type="texto"
             placeholder="El capitán Barbossa le roba el barco al pirata Jack Sparrow..."
+            required
           />
         </div>
         <div className="w-full md:w-1/2 px-3">
@@ -111,6 +117,7 @@ function MoviesForm() {
             name="poster"
             type="text"
             placeholder="https://res.cloudinary.com/dh01roref/image/upload/v1675895691"
+            required
           />
         </div>
         <div className="w-full md:w-1/2 px-3">
@@ -144,6 +151,7 @@ function MoviesForm() {
             name="gender1"
             type="text"
             placeholder="Terror"
+            required
           />
         </div>
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -159,6 +167,7 @@ function MoviesForm() {
             name="gender2"
             type="text"
             placeholder="Ciencia ficcion"
+            required
           />
         </div>
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -189,6 +198,7 @@ function MoviesForm() {
             name="schedule1"
             type="text"
             placeholder="15:00"
+            required
           />
           <input
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 mb-2"
@@ -196,6 +206,7 @@ function MoviesForm() {
             name="date1"
             type="text"
             placeholder="03/10/2023"
+            required
           />
           <input
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -203,6 +214,7 @@ function MoviesForm() {
             name="cinema1"
             type="text"
             placeholder="A1"
+            required
           />
         </div>
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -215,6 +227,7 @@ function MoviesForm() {
             name="schedule2"
             type="text"
             placeholder="17:30"
+            required
           />
           <input
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 mb-2"
@@ -222,6 +235,7 @@ function MoviesForm() {
             name="date2"
             type="text"
             placeholder="03/20/2023"
+            required
           />
           <input
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -229,6 +243,7 @@ function MoviesForm() {
             name="cinema2"
             type="text"
             placeholder="A2"
+            required
           />
         </div>
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -241,6 +256,7 @@ function MoviesForm() {
             name="schedule3"
             type="text"
             placeholder="14:00"
+            required
           />
           <input
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 mb-2"
@@ -248,6 +264,7 @@ function MoviesForm() {
             name="date3"
             type="text"
             placeholder="03/25/2023"
+            required
           />
           <input
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -255,6 +272,7 @@ function MoviesForm() {
             name="cinema3"
             type="text"
             placeholder="B1"
+            required
           />
         </div>
 
