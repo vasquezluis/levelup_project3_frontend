@@ -1,12 +1,10 @@
-import { useEffect } from "react";
-import { AiOutlineMenu } from "react-icons/ai";
-import { FiShoppingCart } from "react-icons/fi";
-import { BsChatLeft } from "react-icons/bs";
+import { NavLink } from "react-router-dom";
+
+import { RiUserFill, RiUserAddFill } from "react-icons/ri";
 
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
 import { useStateContext } from "../../contexts/ContextProvider";
-import { Button } from "@syncfusion/ej2/buttons";
 
 // ? component for navbar icons
 const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
@@ -31,23 +29,37 @@ function Navbar() {
   const { activeMenu, setActiveMenu } = useStateContext();
 
   return (
-    <div className="flex justify-between p-2 md:mx-6 relative">
-      <NavButton
+    <div className="flex justify-end p-2 md:mx-6 relative">
+      {/* <NavButton
         title="Menu"
-        customFunc={() => setActiveMenu((prevActiveMenu) => !prevActiveMenu)}
+        customFunc={() => setActiveMenu((prevActiveMenu) => !activeMenu)}
         color="blue"
         icon={<AiOutlineMenu />}
-      />
+      /> */}
 
       {/* other icons on navbar */}
       <div>
-        <NavButton
-          title="Chat"
-          dotColor="#03c9d7"
-          customFunc={() => handleClick("chat")}
-          color="blue"
-          icon={<FiShoppingCart />}
-        />
+        <NavLink to="/login">
+          <NavButton
+            title="signin"
+            dotColor="#03c9d7"
+            // customFunc={() => handleClick("chat")}
+            color="black"
+            icon={<RiUserFill />}
+          />
+        </NavLink>
+      </div>
+
+      <div>
+        <NavLink to="/signup">
+          <NavButton
+            title="signup"
+            dotColor="#03c9d7"
+            // customFunc={() => handleClick("chat")}
+            color="black"
+            icon={<RiUserAddFill />}
+          />
+        </NavLink>
       </div>
     </div>
   );
