@@ -9,11 +9,13 @@ function AdminMovieCard({ name, poster, sinopsis, genders, cost }) {
         <p className="text-[14px] mb-3 ">{sinopsis.substring(0, 75)}...</p>
         <p className="text-[14px] mb-3 ">Costo: {cost} creditos</p>
         {genders.map((item, index) => {
-          return (
-            <span className="bg-gray-300 rounded-md px-2 mx-1" key={index}>
-              {item}{" "}
-            </span>
-          );
+          if (item) {
+            return (
+              <span className="bg-gray-300 rounded-md px-2 mx-1" key={index}>
+                {item}
+              </span>
+            );
+          }
         })}
       </div>
     </div>
