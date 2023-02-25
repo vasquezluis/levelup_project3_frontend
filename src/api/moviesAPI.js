@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../libs/axios.js";
 
 // axios instance
 
@@ -22,4 +22,4 @@ export const getItems = async () => {
   return response.data.body;
 };
 
-export const createItem = (movie) => moviesAPI.post("/", movie);
+export const createItem = (movie) => axios.post("/movies", movie);
