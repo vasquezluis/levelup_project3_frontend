@@ -68,19 +68,23 @@ function Index() {
               />
               <div className="flex flex-col pl-10 pt-10 max-w-sm">
                 <h2 className=" text-3xl font-bold mb-4">{movieToShow.name}</h2>
-                <p className="mb-4">
+                <p className="mb-4 text-justify">
                   Sinopsis: {movieToShow.description.substring(0, 200)}...
                 </p>
                 <p>
                   Genero:
-                  {movieToShow.genders.map((item, index) => (
-                    <span
-                      className="bg-gray-200 px-1 mx-1 rounded-md"
-                      key={index}
-                    >
-                      {item}
-                    </span>
-                  ))}
+                  {movieToShow.genders.map((item, index) => {
+                    if (item) {
+                      return (
+                        <span
+                          className="bg-gray-200 px-1 mx-1 rounded-md"
+                          key={index}
+                        >
+                          {item}
+                        </span>
+                      );
+                    }
+                  })}
                 </p>
               </div>
             </div>
@@ -93,19 +97,23 @@ function Index() {
               />
               <div className="flex flex-col pl-10 pt-10 max-w-sm">
                 <h2 className="text-3xl font-bold mb-4">{movieToShow2.name}</h2>
-                <p className="mb-4">
+                <p className="mb-4 text-justify">
                   Sinopsis: {movieToShow2.description.substring(0, 200)}...
                 </p>
                 <p>
                   Genero:
-                  {movieToShow2.genders.map((item, index) => (
-                    <span
-                      className="text-gray-900 bg-gray-200 px-1 mx-1 rounded-md"
-                      key={index}
-                    >
-                      {item}
-                    </span>
-                  ))}
+                  {movieToShow2.genders.map((item, index) => {
+                    if (item) {
+                      return (
+                        <span
+                          className="bg-gray-200 px-1 mx-1 rounded-md"
+                          key={index}
+                        >
+                          {item}
+                        </span>
+                      );
+                    }
+                  })}
                 </p>
               </div>
             </div>
@@ -114,10 +122,10 @@ function Index() {
           <div className="text-center bg-white">
             <div>
               <p>
-                <span className="font-bold">Cines de Guatemala</span> es una cadena de cines que te
-                ofrecen las mejores peliculas, los mejores estrenos, y las
-                mejores salas de cines del país. Descubre la variedad de
-                peliculas disponibles!
+                <span className="font-bold">Cines de Guatemala</span> es una
+                cadena de cines que te ofrecen las mejores peliculas, los
+                mejores estrenos, y las mejores salas de cines del país.
+                Descubre la variedad de peliculas disponibles!
               </p>
             </div>
             <div className="my-3 pb-5 mt-4">
