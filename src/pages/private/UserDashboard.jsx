@@ -13,7 +13,7 @@ import ReservationCard from "../../components/reservations/ReservationCard";
 import AccreditationsForm from "../../components/accreditations/AccreditationsForm";
 
 function UserDashboard() {
-  const userId = "63f441955be6f3e55ca082b8";
+  const userId = "63f7eb93f497ed2c931f6850";
 
   // TODO: fetching reservations data
   const reservationsQuery = useQuery({
@@ -68,26 +68,18 @@ function UserDashboard() {
   return (
     <div className="mt-5">
       <div className="flex flex-wrap lg:flex-wrap justify-center">
-        {/* Accreditation section */}
+        {/* Accreditation/user section */}
         <div className="p-2">
           <div className="bg-white flex flex-col px-5 ">
             {/* user */}
             <div className="bg-white flex flex-col items-start pt-3 pb-3">
-              <p className="text-2xl font-bold">
-                Usuario:{" "}
-                <span className="font-normal">{userQuery.data.user}</span>
+              <p className="text-xl font-bold">
+                Usuario:
+                <span className="font-normal"> {userQuery.data.user}</span>
               </p>
-              <p className="text-2xl font-bold">
-                Creditos:{" "}
-                <span className="font-normal">{userQuery.data.credits}</span>
-              </p>
-            </div>
-
-            {/* credits */}
-            <div className="bg-white flex flex-col items-center pt-3 pb-3">
-              <p className="text-2xl font-bold ">
-                Creditos:{" "}
-                <span className="font-normal">{userQuery.data.credits}</span>
+              <p className="text-xl font-bold">
+                Creditos disponibles:
+                <span className="font-normal"> {userQuery.data.credits}</span>
               </p>
             </div>
 
@@ -105,16 +97,51 @@ function UserDashboard() {
               </div>
             </div>
           </div>
+
+          {/* User information section */}
+          <div className="bg-white flex flex-col px-5 mt-5">
+            {/* user */}
+            <div className="bg-white flex flex-col items-start pt-3 pb-3">
+              <p className="font-bold">
+                Usuario:
+                <span className="font-normal"> {userQuery.data.user}</span>
+              </p>
+              <p className="font-bold">
+                Creditos:
+                <span className="font-normal"> {userQuery.data.credits}</span>
+              </p>
+              <p className="font-bold">
+                Nombres:
+                <span className="font-normal"> {userQuery.data.name}</span>
+              </p>
+              <p className="font-bold">
+                Apellidos:
+                <span className="font-normal"> {userQuery.data.lastname}</span>
+              </p>
+              <p className="font-bold">
+                Identificacion:
+                <span className="font-normal"> {userQuery.data.identification}</span>
+              </p>
+              <p className="font-bold">
+                Correo:
+                <span className="font-normal"> {userQuery.data.email}</span>
+              </p>
+              <p className="font-bold">
+                Telefono:
+                <span className="font-normal"> {userQuery.data.phone}</span>
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* reservations section */}
         <div className="p-2">
           {/* title */}
           <div className="text-3xl font-bold bg-white flex flex-col items-center pt-3 pb-3">
-            Reservaciones
+            Mis reservaciones
           </div>
           {/* items listing */}
-          <div className="bg-white grid md:grid-cols-3 lg:grid-cols-4">
+          <div className="bg-white grid md:grid-cols-3 lg:grid-cols-4 p-4">
             {reservationsQuery.data.map((item, index) => (
               <ReservationCard
                 key={index}
