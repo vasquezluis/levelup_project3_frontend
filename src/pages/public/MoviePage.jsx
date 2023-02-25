@@ -12,7 +12,7 @@ function MoviePage() {
   // TODO movie id from url
   const { id } = useParams();
   // TODO userId from context
-  const userId = "63f441955be6f3e55ca082b8";
+  const userId = "63f7eb93f497ed2c931f6850";
 
   // TODO connection to movieAPI
   const {
@@ -239,7 +239,7 @@ function MoviePage() {
           <div className="w-full py-10 flex gap-5 justify-center">
             <button
               type="button"
-              className="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-full mb-4"
+              className="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded mb-4"
               onClick={handleSubmit}
             >
               Reservar
