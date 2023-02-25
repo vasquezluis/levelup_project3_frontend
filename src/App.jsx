@@ -10,11 +10,13 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 // * pages
 import Index from "./pages/public/Index";
-import SignUser from "./pages/public/SignUser";
 import CinemaListings from "./pages/public/CinemaListings";
 import UserDashboard from "./pages/private/UserDashboard";
 import AdminDashboard from "./pages/private/AdminDashboard";
 import MoviePage from "./pages/public/MoviePage";
+
+import LogIn from "./pages/public/Login";
+import SignUp from "./pages/public/SignUp";
 
 // * subpages
 
@@ -65,7 +67,9 @@ function App() {
               {/* Public pages */}
               <Route path="/" element={<Index />} />
               <Route path="/index" element={<Index />} />
-              <Route path="/login" element={<SignUser />} />
+
+              <Route path="/login" element={<LogIn />} />
+              <Route path="/signup" element={<SignUp />} />
 
               <Route path="/cartelera/:id" element={<MoviePage />} />
               <Route path="/cartelera" element={<CinemaListings />} />
@@ -73,6 +77,9 @@ function App() {
               {/* Private pages */}
               <Route path="/admindash" element={<AdminDashboard />} />
               <Route path="/userdash" element={<UserDashboard />} />
+
+              {/* Not Found */}
+              <Route path="/*" element={<p>Página no encontrada</p>}/>
             </Routes>
           </div>
         </div>
