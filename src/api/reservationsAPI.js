@@ -1,26 +1,23 @@
-import axios from "axios";
-
-// axios instance
-
-const reservationsAPI = axios.create({
-  baseURL: "http://localhost:3000/api/v1/reservations",
-});
+import axios from "../libs/axios";
 
 /**
  * * endpoints functions
  */
 
 export const getItem = async (id) => {
-  const response = await reservationsAPI.get(`/${id}`);
+  const response = await axios.get(`/reservations/${id}`);
 
   return response.data.body;
 };
 
 export const getItems = async () => {
-  const response = await reservationsAPI.get("/");
+  const response = await axios.get("/reservations");
 
   return response.data.body;
 };
 
-export const createItem = (reservation) =>
-  reservationsAPI.post("/", reservation);
+export const createItem = async (reservation) => {
+  const response = await axios.post("/reservations", reservation);
+
+  return response.data.body;
+};
