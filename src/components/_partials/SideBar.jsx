@@ -42,10 +42,10 @@ function MainNavbar() {
       ],
     },
     {
-      title: "Mi Perfil",
+      title: "Perfil",
       links: [
         {
-          name: "perfil",
+          name: "mi perfil",
           url: "userdash",
           icon: <RiUserFill />,
         },
