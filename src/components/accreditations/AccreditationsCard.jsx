@@ -1,17 +1,18 @@
 import { useRef } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 import { acceptItem } from "../../api/accreditationsAPI";
 
 function AccreditationsCard({ id, user, credits, coupon }) {
-  // ? ref form
-  const formRef = useRef();
+  const formRef = useRef(); // ? ref form
+  const queryClient = useQueryClient(); // ? query client to invalidate data
 
   // TODO accept item on api
   const acceptAccreditationMutation = useMutation({
     mutationFn: acceptItem,
     onSuccess: () => {
       alert("Solicitud aceptada");
+      queryClient.invalidateQueries("accreditations");
     },
   });
 
