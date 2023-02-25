@@ -27,3 +27,9 @@ export const getReservations = async (userId) => {
 
   return response.data.body;
 };
+
+export const createItem = async (body) => {
+  const response = await usersAPI.post("/", body);
+
+  return response.data.body;
+};
