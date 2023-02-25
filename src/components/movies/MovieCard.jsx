@@ -8,11 +8,13 @@ function MovieCard({ name, poster, sinopsis, genders, schedules }) {
         <h3 className="text-[20px] font-bold">{name}</h3>
         <p className="text-[14px] mb-3 ">{sinopsis.substring(0, 70)}...</p>
         {genders.map((item, index) => {
-          return (
-            <span className="bg-gray-300 rounded-md px-2 mx-1" key={index}>
-              {item}{" "}
-            </span>
-          );
+          if (item) {
+            return (
+              <span className="bg-gray-300 rounded-md px-2 mx-1" key={index}>
+                {item}{" "}
+              </span>
+            );
+          }
         })}
       </div>
     </div>
