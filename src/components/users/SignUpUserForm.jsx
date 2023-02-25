@@ -1,115 +1,181 @@
-import React from "react";
+import { useRef } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { createItem } from "../../api/usersAPI";
 
 function SignUpUserForm() {
+  // * reference to form for clear data fields
+  const formRef = useRef();
+
+  // * mutation config
+  const addUserMutation = useMutation({
+    mutationFn: createItem,
+    onSuccess: () => {
+      alert("Usuario creado");
+    },
+    onError: () => {
+      alert("Error creando usuario");
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const user = Object.fromEntries(formData);
+
+    console.log(user);
+    console.log(typeof user);
+    console.log(user.length)
+
+    if (Object.values(user).length !== 8) alert("Rellena todos los campos");
+
+    if (user.password == user.password2) {
+      delete user.password2;
+      addUserMutation.mutate(user);
+
+      formRef.current.reset();
+    } else {
+      alert("Las contrase;as deben coincidir");
+    }
+  };
+
   return (
-    <form className="w-full max-w-lg">
+    <form className="w-full max-w-lg" onSubmit={handleSubmit} ref={formRef}>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-first-name"
+            htmlFor="name"
           >
-            First Name
+            Nombres
           </label>
           <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-            id="grid-first-name"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            id="name"
+            name="name"
             type="text"
-            placeholder="Jane"
+            placeholder="Elias Julian"
+            required
           />
-          <p className="text-red-500 text-xs italic">
-            Please fill out this field.
-          </p>
+        </div>
+        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <label
+            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            htmlFor="lastname"
+          >
+            apellidos
+          </label>
+          <input
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            id="lastname"
+            name="lastname"
+            type="text"
+            placeholder="Hernandez Torres"
+            required
+          />
         </div>
         <div className="w-full md:w-1/2 px-3">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-last-name"
+            htmlFor="identification"
           >
-            Last Name
+            Identificacion
           </label>
           <input
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="grid-last-name"
+            id="identification"
+            name="identification"
             type="text"
-            placeholder="Doe"
+            placeholder="7894561239510"
           />
         </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
+        <div className="w-full md:w-1/2 px-3">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-password"
+            htmlFor="phone"
           >
-            Password
+            Telefono
           </label>
           <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="grid-password"
-            type="password"
-            placeholder="******************"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            id="phone"
+            name="phone"
+            type="text"
+            placeholder="56453221"
           />
-          <p className="text-gray-600 text-xs italic">
-            Make it as long and as crazy as you'd like
-          </p>
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-2">
-        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+        <div className="w-full md:w-1/2 px-3">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-city"
+            htmlFor="email"
           >
-            City
+            Email
           </label>
           <input
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="grid-city"
-            type="text"
-            placeholder="Albuquerque"
+            id="email"
+            name="email"
+            type="email"
+            placeholder="user@gmail.com"
           />
         </div>
-        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+        <div className="w-full md:w-1/2 px-3">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-state"
+            htmlFor="user"
           >
-            State
-          </label>
-          <div className="relative">
-            <select
-              className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="grid-state"
-            >
-              <option>New Mexico</option>
-              <option>Missouri</option>
-              <option>Texas</option>
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <svg
-                className="fill-current h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-              >
-                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-              </svg>
-            </div>
-          </div>
-        </div>
-        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-zip"
-          >
-            Zip
+            Usuario
           </label>
           <input
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="grid-zip"
+            id="user"
+            name="user"
             type="text"
-            placeholder="90210"
+            placeholder="usuario1234"
           />
+        </div>
+      </div>
+
+      <div className="flex flex-wrap -mx-3 mb-2 mt-2">
+        <div className="w-full md:w-1/2 px-3">
+          <label
+            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            htmlFor="passwordSignUp1"
+          >
+            Contraseña
+          </label>
+          <input
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            id="passwordSignUp1"
+            name="password"
+            type="password"
+            placeholder="******"
+          />
+        </div>
+        <div className="w-full md:w-1/2 px-3">
+          <label
+            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            htmlFor="passwordSignUp2"
+          >
+            Repite contraseña
+          </label>
+          <input
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            id="passwordSignUp2"
+            name="password2"
+            type="password"
+            placeholder="******"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-wrap -mx-3 mb-2 pt-2">
+        <div className="w-full md:w-1/2 px-3 flex flex-col justify-end items-start">
+          <button className="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Aceptar
+          </button>
         </div>
       </div>
     </form>
