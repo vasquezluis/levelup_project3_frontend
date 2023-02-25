@@ -69,12 +69,15 @@ function AdminDashboard() {
             <p className="text-2xl font-bold ">Lista de usuarios</p>
           </div>
 
-          {/* users list */}
-          <div className="bg-white grid md:gri-cols-2 lg:grid-cols-3">
+          {/* clients list */}
+          <div className="bg-white grid md:gri-cols-2 lg:grid-cols-3 pb-3 content-center">
             {usersQuery.data.map((item, index) => (
               <UserCard
                 key={index}
                 user={item.user}
+                name={item.name}
+                roles={item.roles}
+                lastname={item.lastname}
                 credits={item.credits}
                 identification={item.identification}
                 email={item.email}
