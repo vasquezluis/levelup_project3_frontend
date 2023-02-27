@@ -18,22 +18,14 @@ import MoviePage from "./pages/public/MoviePage";
 import LogIn from "./pages/public/Login";
 import SignUp from "./pages/public/SignUp";
 
+import { useSelector } from "react-redux";
+import { setUser } from "./reducers/userSlice";
+
 // * subpages
 
 function App() {
-  const [user, setUser] = useState(null);
+  const user = useSelector((state) => state.user);
 
-  const login = () => {
-    // request done
-    setUser({
-      id: 1,
-      name: "john",
-      permission: ["admin"],
-      roles: ["normal"],
-    });
-  };
-
-  const logout = () => setUser(null);
   const activeMenu = true;
 
   return (
@@ -59,6 +51,13 @@ function App() {
           {/* navbar div */}
           <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full">
             <Navbar />
+            {/* <button className="bg-green-300 p-2" onClick={login}>
+              Log in
+            </button>
+
+            <button className="bg-green-300 p-2" onClick={logout}>
+              Log out
+            </button> */}
           </div>
 
           {/* Routing */}
@@ -74,12 +73,38 @@ function App() {
               <Route path="/cartelera/:id" element={<MoviePage />} />
               <Route path="/cartelera" element={<CinemaListings />} />
 
-              {/* Private pages */}
-              <Route path="/admindash" element={<AdminDashboard />} />
-              <Route path="/userdash" element={<UserDashboard />} />
+              {/* Private pages | admin role */}
+              <Route
+                path="/admindash"
+                element={
+                  <ProtectedRoute
+                    isAllowed={!!user && user.roles.includes("admin")}
+                    redirecTo="/"
+                  >
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              ></Route>
+
+              {/* Private page | user role */}
+              <Route
+                path="/userdash"
+                element={
+                  <ProtectedRoute
+                    isAllowed={
+                      !!user &&
+                      (user.roles.includes("user") ||
+                        user.roles.includes("admin"))
+                    }
+                    redirecTo="/"
+                  >
+                    <UserDashboard />
+                  </ProtectedRoute>
+                }
+              ></Route>
 
               {/* Not Found */}
-              <Route path="/*" element={<p>Página no encontrada</p>}/>
+              <Route path="/*" element={<p>Página no encontrada</p>} />
             </Routes>
           </div>
         </div>
