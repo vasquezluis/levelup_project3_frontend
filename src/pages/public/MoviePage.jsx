@@ -1,9 +1,11 @@
 import { useQuery, useMutation, QueryClient } from "react-query";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import dateFormat from "dateformat";
 import { getItem } from "../../api/moviesAPI";
 import { createItem } from "../../api/reservationsAPI";
+
+import { useSelector } from "react-redux";
 
 // useLocation for know the current url
 // useParams for params on url
@@ -12,7 +14,10 @@ function MoviePage() {
   // TODO movie id from url
   const { id } = useParams();
   // TODO userId from context
-  const userId = "63f7eb93f497ed2c931f6850";
+  const user = useSelector((state) => state.user);
+  const userId = user.id;
+
+  const navigate = useNavigate();
 
   // TODO connection to movieAPI
   const {
@@ -29,6 +34,7 @@ function MoviePage() {
     mutationFn: createItem,
     onSuccess: () => {
       alert("Reservacion creada!");
+      navigate("/userdash");
     },
     onError: () => {
       alert("Creditos insuficientes!");
@@ -130,7 +136,11 @@ function MoviePage() {
         seats: seats,
       };
 
-      addReservationMutation.mutate(reservationData);
+      if (userId == "") {
+        navigate("/login");
+      } else {
+        addReservationMutation.mutate(reservationData);
+      }
     }
   };
 
