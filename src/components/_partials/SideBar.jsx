@@ -13,11 +13,12 @@ import { SiShopware } from "react-icons/si";
 import { MdOutlineCancel } from "react-icons/md";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
-import { useStateContext } from "../../contexts/ContextProvider";
+// import { useStateContext } from "../../contexts/ContextProvider";
 
 function MainNavbar() {
   // ? booleano del sidebar | desde el contexto
-  const { activeMenu, setActiveMenu } = useStateContext();
+  // const { activeMenu, setActiveMenu } = useStateContext();
+  const activeMenu = true;
 
   // ? classes para link activo
   const activeLink =
