@@ -5,15 +5,19 @@ import {
   useQuery,
   useQueryClient,
 } from "react-query";
+import { useSelector } from "react-redux";
 
 import { getReservations, getItem } from "../../api/usersAPI";
 import { createItem } from "../../api/accreditationsAPI";
 
 import ReservationCard from "../../components/reservations/ReservationCard";
 import AccreditationsForm from "../../components/accreditations/AccreditationsForm";
+import { redirect } from "react-router-dom";
 
 function UserDashboard() {
-  const userId = "63f7eb93f497ed2c931f6850";
+  const user = useSelector((state) => state.user);
+
+  const userId = user.id;
 
   // TODO: fetching reservations data
   const reservationsQuery = useQuery({
@@ -120,7 +124,10 @@ function UserDashboard() {
               </p>
               <p className="font-bold">
                 Identificacion:
-                <span className="font-normal"> {userQuery.data.identification}</span>
+                <span className="font-normal">
+                  {" "}
+                  {userQuery.data.identification}
+                </span>
               </p>
               <p className="font-bold">
                 Correo:
