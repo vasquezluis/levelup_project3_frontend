@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
-
-import { RiUserFill, RiUserAddFill } from "react-icons/ri";
-
+import { RiUserFill, RiUserAddFill, RiUserSharedFill } from "react-icons/ri";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
-import { useStateContext } from "../../contexts/ContextProvider";
+// import { useStateContext } from "../../contexts/ContextProvider";
+import { useSelector, useDispatch } from "react-redux";
+import { unSetUser } from "../../reducers/userSlice";
 
 // ? component for navbar icons
 const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
@@ -26,40 +26,54 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 
 function Navbar() {
   // obtain state of active (menu)
-  const { activeMenu, setActiveMenu } = useStateContext();
+  // const { activeMenu, setActiveMenu } = useStateContext();
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleLogOut = () => {
+    dispatch(unSetUser());
+  };
 
   return (
     <div className="flex justify-end p-2 md:mx-6 relative">
-      {/* <NavButton
-        title="Menu"
-        customFunc={() => setActiveMenu((prevActiveMenu) => !activeMenu)}
-        color="blue"
-        icon={<AiOutlineMenu />}
-      /> */}
-
       {/* other icons on navbar */}
-      <div>
-        <NavLink to="/login">
-          <NavButton
-            title="signin"
-            dotColor="#03c9d7"
-            // customFunc={() => handleClick("chat")}
-            color="black"
-            icon={<RiUserFill />}
-          />
-        </NavLink>
+
+      <div className="flex flex-row">
+        {user.user != "" ? (
+          <NavLink to="/login" onClick={handleLogOut}>
+            <NavButton
+              title="signout"
+              dotColor="#03c9d7"
+              // customFunc={() => handleClick("chat")}
+              color="black"
+              icon={<RiUserSharedFill />}
+            ></NavButton>
+          </NavLink>
+        ) : (
+          <NavLink to="/login">
+            <NavButton
+              title="signin"
+              dotColor="#03c9d7"
+              // customFunc={() => handleClick("chat")}
+              color="black"
+              icon={<RiUserFill />}
+            ></NavButton>
+          </NavLink>
+        )}
       </div>
 
       <div>
-        <NavLink to="/signup">
-          <NavButton
-            title="signup"
-            dotColor="#03c9d7"
-            // customFunc={() => handleClick("chat")}
-            color="black"
-            icon={<RiUserAddFill />}
-          />
-        </NavLink>
+        {user.user == "" ? (
+          <NavLink to="/signup">
+            <NavButton
+              title="signup"
+              dotColor="#03c9d7"
+              // customFunc={() => handleClick("chat")}
+              color="black"
+              icon={<RiUserAddFill />}
+            />
+          </NavLink>
+        ) : null}
       </div>
     </div>
   );
