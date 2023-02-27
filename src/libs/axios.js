@@ -1,7 +1,8 @@
 import axios from "axios";
-// import { useAuthStore } from "../store/auth";
 
 // TODO to add token to axios headers
+
+// const { token } = useSelector((state) => state.user);
 
 const authAPI = axios.create({
   baseURL: "http://localhost:3000/api/v1",
@@ -13,7 +14,7 @@ authAPI.interceptors.request.use((config) => {
   // ? token from local storage
   // const token = useAuthStore.getState().token;
 
-  config.headers.authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTk4NjFkYTMyYzkzOWJhYzQyNzlmMSIsInVzZXIiOiJsdWlzdmFzcXVleiIsInJvbGVzIjpbImFkbWluIl0sInBlcm1pc3Npb25zIjpbImFkbWluIl0sImlhdCI6MTY3NzM0NDQ3MywiZXhwIjoxNjc3MzYyNDczfQ.KzmdacilevmJwcj0QWo0S8zzdbFAjwgqZ4J1-hMsqXo`;
+  config.headers.authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTk4NjFkYTMyYzkzOWJhYzQyNzlmMSIsInVzZXIiOiJsdWlzdmFzcXVleiIsInJvbGVzIjpbImFkbWluIl0sInBlcm1pc3Npb25zIjpbImFkbWluIl0sImlhdCI6MTY3NzUxMTEwMywiZXhwIjoxNjc3NTk3NTAzfQ.KAqgQuiroaC3j-NOiHz-pPZ7Zw0LcibPKxPPUldF7x8`;
 
   return config;
 });
