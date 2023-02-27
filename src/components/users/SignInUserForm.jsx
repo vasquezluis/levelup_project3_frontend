@@ -4,7 +4,11 @@ import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+import { useDispatch } from "react-redux";
+import { setUser } from "../../reducers/userSlice";
+
 function SignInUserForm() {
+  const dispatch = useDispatch();
   const formRef = useRef();
   const navigate = useNavigate();
   const [passwordMessage, setPasswordMessage] = useState(false);
@@ -12,7 +16,15 @@ function SignInUserForm() {
 
   const loginMutation = useMutation({
     mutationFn: authFunction,
-    onSuccess: () => {
+    onSuccess: (data, variables, context) => {
+      dispatch(
+        setUser({
+          id: data.userData.id,
+          roles: data.userData.roles,
+          user: data.userData.user,
+        })
+      );
+
       navigate("/userdash");
     },
     onError: (error, variables, context) => {
@@ -32,7 +44,11 @@ function SignInUserForm() {
     const formData = new FormData(e.target); // ? getting form data
     const loginData = Object.fromEntries(formData); // ? creatind product object from formData
 
-    loginMutation.mutate(loginData);
+    try {
+      loginMutation.mutate(loginData);
+    } catch (error) {
+      console.log(error.message);
+    }
 
     formRef.current.reset();
   };
