@@ -38,6 +38,9 @@ function Navbar() {
   return (
     <div className="flex justify-end p-2 md:mx-6 relative">
       {/* other icons on navbar */}
+      <div className="flex flex-col justify-center">
+        <p>{user.user}</p>
+      </div>
 
       <div className="flex flex-row">
         {user.user != "" ? (
