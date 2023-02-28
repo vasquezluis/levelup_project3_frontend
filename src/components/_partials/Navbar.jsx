@@ -32,6 +32,7 @@ function Navbar() {
 
   const handleLogOut = () => {
     dispatch(unSetUser());
+    window.localStorage.removeItem("loggedUser");
   };
 
   return (
