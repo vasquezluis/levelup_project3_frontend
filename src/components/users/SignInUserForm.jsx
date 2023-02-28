@@ -25,7 +25,15 @@ function SignInUserForm() {
         })
       );
 
-      navigate("/userdash");
+      // local storage for token
+      window.localStorage.setItem("loggedUser", JSON.stringify(data));
+
+      // * redirect
+      if (data.userData.roles.includes("admin")) {
+        navigate("/admindash");
+      } else if (data.userData.roles.includes("user")) {
+        navigate("/userdash");
+      }
     },
     onError: (error, variables, context) => {
       if (error.response.status == 404) {
