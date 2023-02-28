@@ -2,6 +2,7 @@ import "./App.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 // * components
 import Sidebar from "./components/_partials/SideBar";
@@ -14,12 +15,12 @@ import CinemaListings from "./pages/public/CinemaListings";
 import UserDashboard from "./pages/private/UserDashboard";
 import AdminDashboard from "./pages/private/AdminDashboard";
 import MoviePage from "./pages/public/MoviePage";
-
 import LogIn from "./pages/public/Login";
 import SignUp from "./pages/public/SignUp";
 
-import { useSelector, useDispatch } from "react-redux";
+// * global data
 import { setUser } from "./reducers/userSlice";
+import { getTokenFromLocalStorage } from "./libs/axios";
 
 // * subpages
 
@@ -31,6 +32,9 @@ function App() {
 
     if (loggedUser) {
       const user = JSON.parse(loggedUser);
+
+      // ? give axios the token from operations
+      getTokenFromLocalStorage(`${user.token}`);
 
       dispatch(
         setUser({
