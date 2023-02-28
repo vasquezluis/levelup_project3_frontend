@@ -161,11 +161,18 @@ function MoviePage() {
           <div className="max-w-md">
             <p className="text-3xl font-bold mb-3">{movie.name}</p>
             <p className="text-justify mb-3">{movie.description}</p>
-            {movie.genders.map((item, index) => (
-              <span key={index} className="bg-gray-300 px-2 rounded-md mr-1">
-                {item}
-              </span>
-            ))}
+            {movie.genders.map((item, index) => {
+              if (item) {
+                return (
+                  <span
+                    key={index}
+                    className="bg-gray-300 px-2 rounded-md mr-1"
+                  >
+                    {item}
+                  </span>
+                );
+              }
+            })}
           </div>
           {/* other section */}
           <div className="w-auto px-10 flex flex-col justify-end">
