@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { useDispatch } from "react-redux";
 import { setUser } from "../../reducers/userSlice";
+import { getTokenFromLocalStorage } from "../../libs/axios";
 
 function SignInUserForm() {
   const dispatch = useDispatch();
@@ -27,6 +28,11 @@ function SignInUserForm() {
 
       // local storage for token
       window.localStorage.setItem("loggedUser", JSON.stringify(data));
+
+      // * set token to axios operations
+      const loggedUser = window.localStorage.getItem("loggedUser");
+      const user = JSON.parse(loggedUser);
+      getTokenFromLocalStorage(`${user.token}`);
 
       // * redirect
       if (data.userData.roles.includes("admin")) {
@@ -73,14 +79,14 @@ function SignInUserForm() {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="username"
           >
-            Username
+            Usuario
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none mb-3 focus:shadow-outline"
             id="username"
             name="user"
             type="text"
-            placeholder="Username"
+            placeholder="Usuario"
             required
           />
           <p className="text-red-500 text-xs italic">
@@ -92,7 +98,7 @@ function SignInUserForm() {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="password"
           >
-            Password
+            Contraseña
           </label>
           <input
             className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
@@ -107,7 +113,7 @@ function SignInUserForm() {
           </p>
         </div>
         <div className="flex items-center justify-between">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          <button className="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Login
           </button>
         </div>
