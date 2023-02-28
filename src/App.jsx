@@ -1,7 +1,7 @@
 import "./App.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useEffect } from "react";
 
 // * components
 import Sidebar from "./components/_partials/SideBar";
@@ -18,12 +18,31 @@ import MoviePage from "./pages/public/MoviePage";
 import LogIn from "./pages/public/Login";
 import SignUp from "./pages/public/SignUp";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "./reducers/userSlice";
 
 // * subpages
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const loggedUser = window.localStorage.getItem("loggedUser");
+
+    if (loggedUser) {
+      const user = JSON.parse(loggedUser);
+
+      dispatch(
+        setUser({
+          id: user.userData.id,
+          user: user.userData.user,
+          permissions: user.userData.permissions,
+          roles: user.userData.roles,
+        })
+      );
+    }
+  }, []);
+
   const user = useSelector((state) => state.user);
 
   const activeMenu = true;
