@@ -16,6 +16,12 @@ export const getItem = async (id) => {
   return response.data.body;
 };
 
+export const getMovieSeats = async (id) => {
+  const response = await moviesAPI.get(`/${id}/seats`);
+
+  return response.data.body;
+};
+
 export const getItems = async () => {
   const response = await moviesAPI.get("/");
 
