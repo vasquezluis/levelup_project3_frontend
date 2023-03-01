@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { createItem } from "../../api/moviesAPI";
+import { createItem as createSeats } from "../../api/seatsAPI";
 
 function MoviesForm() {
   // * client to update data on change
@@ -9,11 +10,28 @@ function MoviesForm() {
   // * reference to form for clear data fields
   const formRef = useRef();
 
-  //* mutation config
+  // * seats mutation config
+  const addSeatMutation = useMutation({
+    mutationFn: createSeats,
+    onSuccess: () => {
+      console.log("seats added");
+    },
+    onError: (error, variables, context) => {
+      console.log(error);
+    },
+  });
+
+  //* movie mutation config
   const addMovieMutation = useMutation({
     //? function to use in API
     mutationFn: createItem,
-    onSuccess: () => {
+    onSuccess: (data, variables, context) => {
+      const movieId = data.data.body._id;
+      const movie = data.data.body.name;
+
+      // ? creating seats for movie
+      addSeatMutation.mutate({ movieId, movie });
+
       alert("Movie added");
       queryClient.invalidateQueries("movies"); //? from querykey in productsList.jsx
     },
