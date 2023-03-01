@@ -1,10 +1,12 @@
 import { useRef } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { createItem } from "../../api/usersAPI";
 
 function SignUpUserForm() {
   // * reference to form for clear data fields
   const formRef = useRef();
+  const navigate = useNavigate();
 
   // * mutation config
   const addUserMutation = useMutation({
@@ -23,10 +25,6 @@ function SignUpUserForm() {
     const formData = new FormData(e.target);
     const user = Object.fromEntries(formData);
 
-    console.log(user);
-    console.log(typeof user);
-    console.log(user.length)
-
     if (Object.values(user).length !== 8) alert("Rellena todos los campos");
 
     if (user.password == user.password2) {
@@ -34,6 +32,8 @@ function SignUpUserForm() {
       addUserMutation.mutate(user);
 
       formRef.current.reset();
+
+      navigate("/login");
     } else {
       alert("Las contrase;as deben coincidir");
     }
