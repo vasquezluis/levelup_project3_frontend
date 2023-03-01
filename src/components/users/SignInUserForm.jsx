@@ -18,6 +18,9 @@ function SignInUserForm() {
   const loginMutation = useMutation({
     mutationFn: authFunction,
     onSuccess: (data, variables, context) => {
+      // local storage for token
+      window.localStorage.setItem("loggedUser", JSON.stringify(data));
+
       dispatch(
         setUser({
           id: data.userData.id,
@@ -26,13 +29,10 @@ function SignInUserForm() {
         })
       );
 
-      // local storage for token
-      window.localStorage.setItem("loggedUser", JSON.stringify(data));
-
       // * set token to axios operations
-      const loggedUser = window.localStorage.getItem("loggedUser");
-      const user = JSON.parse(loggedUser);
-      getTokenFromLocalStorage(`${user.token}`);
+      // const loggedUser = window.localStorage.getItem("loggedUser");
+      // const user = JSON.parse(loggedUser);
+      getTokenFromLocalStorage(`${data.token}`);
 
       // * redirect
       if (data.userData.roles.includes("admin")) {
@@ -44,10 +44,11 @@ function SignInUserForm() {
     onError: (error, variables, context) => {
       if (error.response.status == 404) {
         setUserMessage(true);
-        setPasswordMessage(false);
-      } else if (error.response.status == 401) {
+        // setPasswordMessage(false);
+      }
+      if (error.response.status == 401) {
         setPasswordMessage(true);
-        setUserMessage(true);
+        setUserMessage(false);
       }
     },
   });
