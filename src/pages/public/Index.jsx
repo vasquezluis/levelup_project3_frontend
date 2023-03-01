@@ -58,66 +58,74 @@ function Index() {
         {/* new section */}
         <div className="flex m-3 bg-white flex-wrap justify-center gap1 items-center">
           {/* top part */}
-          <div className="w-full mx-auto py-10 grid lg:grid-cols-2 gap-5">
-            {/* Poster  */}
-            <div className="p-5 pl-10 flex">
-              <img
-                className="w-[50%]"
-                src={movieToShow.poster}
-                alt={movieToShow.name}
-              />
-              <div className="flex flex-col pl-10 pt-10 max-w-sm">
-                <h2 className=" text-3xl font-bold mb-4">{movieToShow.name}</h2>
-                <p className="mb-4 text-justify">
-                  Sinopsis: {movieToShow.description.substring(0, 200)}...
-                </p>
-                <p>
-                  Genero:
-                  {movieToShow.genders.map((item, index) => {
-                    if (item) {
-                      return (
-                        <span
-                          className="bg-gray-200 px-1 mx-1 rounded-md"
-                          key={index}
-                        >
-                          {item}
-                        </span>
-                      );
-                    }
-                  })}
-                </p>
+          {movieToShow && (
+            <div className="w-full mx-auto py-10 grid lg:grid-cols-2 gap-5">
+              {/* Poster  */}
+              <div className="p-5 pl-10 flex">
+                <img
+                  className="w-[50%]"
+                  src={movieToShow.poster}
+                  alt={movieToShow.name}
+                />
+                <div className="flex flex-col pl-10 pt-10 max-w-sm">
+                  <h2 className=" text-3xl font-bold mb-4">
+                    {movieToShow.name}
+                  </h2>
+                  <p className="mb-4 text-justify">
+                    Sinopsis: {movieToShow.description.substring(0, 200)}...
+                  </p>
+                  <p>
+                    Genero:
+                    {movieToShow.genders.map((item, index) => {
+                      if (item) {
+                        return (
+                          <span
+                            className="bg-gray-200 px-1 mx-1 rounded-md"
+                            key={index}
+                          >
+                            {item}
+                          </span>
+                        );
+                      }
+                    })}
+                  </p>
+                </div>
               </div>
+              {/* Poster  */}
+              {movieToShow2 && (
+                <div className="p-5 pl-10 flex">
+                  <img
+                    className="w-[50%]"
+                    src={movieToShow2.poster}
+                    alt={movieToShow2.name}
+                  />
+                  <div className="flex flex-col pl-10 pt-10 max-w-sm">
+                    <h2 className="text-3xl font-bold mb-4">
+                      {movieToShow2.name}
+                    </h2>
+                    <p className="mb-4 text-justify">
+                      Sinopsis: {movieToShow2.description.substring(0, 200)}...
+                    </p>
+                    <p>
+                      Genero:
+                      {movieToShow2.genders.map((item, index) => {
+                        if (item) {
+                          return (
+                            <span
+                              className="bg-gray-200 px-1 mx-1 rounded-md"
+                              key={index}
+                            >
+                              {item}
+                            </span>
+                          );
+                        }
+                      })}
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
-            {/* Poster  */}
-            <div className="p-5 pl-10 flex">
-              <img
-                className="w-[50%]"
-                src={movieToShow2.poster}
-                alt={movieToShow2.name}
-              />
-              <div className="flex flex-col pl-10 pt-10 max-w-sm">
-                <h2 className="text-3xl font-bold mb-4">{movieToShow2.name}</h2>
-                <p className="mb-4 text-justify">
-                  Sinopsis: {movieToShow2.description.substring(0, 200)}...
-                </p>
-                <p>
-                  Genero:
-                  {movieToShow2.genders.map((item, index) => {
-                    if (item) {
-                      return (
-                        <span
-                          className="bg-gray-200 px-1 mx-1 rounded-md"
-                          key={index}
-                        >
-                          {item}
-                        </span>
-                      );
-                    }
-                  })}
-                </p>
-              </div>
-            </div>
-          </div>
+          )}
           {/* below part */}
           <div className="text-center bg-white">
             <div>
