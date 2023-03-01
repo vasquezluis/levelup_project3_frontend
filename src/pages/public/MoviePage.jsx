@@ -2,8 +2,9 @@ import { useQuery, useMutation, QueryClient } from "react-query";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import dateFormat from "dateformat";
-import { getItem } from "../../api/moviesAPI";
+import { getItem, getMovieSeats } from "../../api/moviesAPI";
 import { createItem } from "../../api/reservationsAPI";
+import { updateItem } from "../../api/seatsAPI";
 
 import { useSelector } from "react-redux";
 
@@ -19,13 +20,13 @@ function MoviePage() {
 
   const navigate = useNavigate();
 
+  // TODO connection to seatsAPI
+  const seatsQuery = useQuery(["seats"], () => getMovieSeats(id), {
+    refetchOnWindowFocus: false,
+    // enabled: false,
+  });
   // TODO connection to movieAPI
-  const {
-    isLoading,
-    data: movie,
-    isError,
-    error,
-  } = useQuery({
+  const moviesQuery = useQuery({
     queryKey: ["movie"],
     queryFn: () => getItem(id),
   });
@@ -38,6 +39,16 @@ function MoviePage() {
     },
     onError: () => {
       alert("Creditos insuficientes!");
+    },
+  });
+  // TODO connection to seatsAPI
+  const updateSeatsMutation = useMutation({
+    mutationFn: updateItem,
+    onSuccess: () => {
+      console.log("datos de asientos actualizados");
+    },
+    onError: () => {
+      console.log("error actualizando asientos");
     },
   });
 
@@ -76,17 +87,42 @@ function MoviePage() {
     "49",
   ]);
 
+  const handleSeats = () => {
+    seatsQuery.refetch();
+    if (seatsQuery.isFetching) {
+      console.log("cargando seats data");
+    } else if (seatsQuery.isFetched) {
+      setBlockedSeat(seatsQuery.data.occupied);
+    } else {
+      console.log("sin cargar seats data");
+    }
+  };
+
+  const [reservedSeats, setReservedSeats] = useState(["00", "01"]);
+
   const columnas = [...Array(10)];
   const filas = [...Array(5)];
 
   const selectSeats = (butacaID) => {
-    let isSelected = seats.includes(butacaID);
-    if (isSelected) {
-      setSeats(seats.filter((item) => item !== butacaID));
-    } else {
-      setSeats([...seats, butacaID]);
+    let isBlocked = blockedSeat.includes(butacaID);
+    if (!isBlocked) {
+      let isSelected = seats.includes(butacaID);
+      if (isSelected) {
+        setSeats(seats.filter((item) => item !== butacaID));
+      } else {
+        setSeats([...seats, butacaID]);
+      }
     }
   };
+
+  // const selectSeats = (butacaID) => {
+  //   let isSelected = seats.includes(butacaID);
+  //   if (isSelected) {
+  //     setSeats(seats.filter((item) => item !== butacaID));
+  //   } else {
+  //     setSeats([...seats, butacaID]);
+  //   }
+  // };
 
   const getTipoButaca = (butacaID) => {
     let isSelected = seats.includes(butacaID);
@@ -95,7 +131,7 @@ function MoviePage() {
     if (isSelected) {
       return "bg-green-400 scale-110";
     } else if (isBlocked) {
-      return "bg-red-400";
+      return "bg-red-400 cursor-not-allowed";
     } else {
       return "";
     }
@@ -110,6 +146,7 @@ function MoviePage() {
     if (isSelected) {
       setSchedule(null);
     } else {
+      handleSeats();
       setSchedule(scheduleID);
     }
   };
@@ -131,7 +168,7 @@ function MoviePage() {
     } else {
       const reservationData = {
         userId,
-        movieId: movie._id,
+        movieId: moviesQuery.data._id,
         schedule: schedule,
         seats: seats,
       };
@@ -139,14 +176,23 @@ function MoviePage() {
       if (userId == "") {
         navigate("/login");
       } else {
+        const newBlockedSeats = [...seats, ...blockedSeat];
+        console.log("new blocked seats: ", newBlockedSeats);
+        console.log("reservation: ", reservationData);
+        const seatsId = seatsQuery.data._id;
+        const body = { occupied: newBlockedSeats };
+        updateSeatsMutation.mutate({ seatsId, body });
         addReservationMutation.mutate(reservationData);
       }
     }
   };
 
   // TODO render return
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error: {error.message}</div>;
+  if (moviesQuery.isLoading) return <div>Loading movies...</div>;
+  if (seatsQuery.isLoading) return <div>Loading seats...</div>;
+
+  if (moviesQuery.isError) return <div>Error: {moviesQuery.error}</div>;
+  if (seatsQuery.isError) return <div>Error: {seatsQuery.error}</div>;
 
   return (
     <div className="mt-5">
@@ -155,13 +201,17 @@ function MoviePage() {
         <div className="flex flex-nowrap p-5 mt-2 items-center bg-white text-black justify-center">
           {/* poster section */}
           <div className="max-w-lg">
-            <img className="w-[80%]" src={movie.poster} alt={movie.name} />
+            <img
+              className="w-[80%]"
+              src={moviesQuery.data.poster}
+              alt={moviesQuery.data.name}
+            />
           </div>
           {/* movie data section */}
           <div className="max-w-md">
-            <p className="text-3xl font-bold mb-3">{movie.name}</p>
-            <p className="text-justify mb-3">{movie.description}</p>
-            {movie.genders.map((item, index) => {
+            <p className="text-3xl font-bold mb-3">{moviesQuery.data.name}</p>
+            <p className="text-justify mb-3">{moviesQuery.data.description}</p>
+            {moviesQuery.data.genders.map((item, index) => {
               if (item) {
                 return (
                   <span
@@ -180,11 +230,11 @@ function MoviePage() {
 
             {/* Trailer from youtube */}
             <div className="aspect-w-16 aspect-h-9">
-              {movie.trailer ? (
+              {moviesQuery.data.trailer ? (
                 <iframe
                   width="420"
                   height="236"
-                  src={`${movie.trailer}`}
+                  src={`${moviesQuery.data.trailer}`}
                   title="YouTube video player"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen;"
                 ></iframe>
@@ -202,13 +252,52 @@ function MoviePage() {
             <p className="text-3xl font-bold">Reserva la pelicula!</p>
           </div>
 
+          {/* schedule section */}
+          <div className="w-auto px-10 flex flex-col justify-end">
+            <p className="text-3xl font-bold mb-3">Selecciona un horario</p>
+
+            {moviesQuery.data.schedules.map((item, index) => (
+              <div
+                key={index}
+                className={`rounded p-2 m-1 bg-gray-300 hover:text-white hover:bg-gray-900 hover:scale-110 cursor-pointer duration-75 ${getSelectedSchedule(
+                  `${item._id}`
+                )}`}
+                onClick={() => selectSchedule(`${item._id}`)}
+              >
+                <p>Costo: {moviesQuery.data.cost} creditos</p>
+                <p>Horario: {item.schedule}</p>
+                <p>Fecha: {dateFormat(item.date, "mmmm dS, yyyy")}</p>
+                <p>Sala: {item.cinema}</p>
+              </div>
+            ))}
+          </div>
+
           {/* seat section */}
           <div className="max-w-lg">
             <div>
               <p className="text-3xl font-bold mb-3">Selecciona una butaca</p>
             </div>
 
+            {/* select seats sections */}
             <div>
+              {filas.map((item, index1) => (
+                <div key={index1} className="flex flex-row m-1">
+                  {columnas.map((item, index2) => (
+                    <div
+                      key={index2}
+                      className={`flex flex-col justify-center items-center m-1 rounded w-14 h-14 bg-gray-300 cursor-pointer ${getTipoButaca(
+                        `${index1}${index2}`
+                      )}`}
+                      onClick={() => selectSeats(`${index1}${index2}`)}
+                    >
+                      {`${index1}${index2}`}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+
+            {/* <div>
               {filas.map((item, index1) => (
                 <div key={index1} className="flex flex-row m-1">
                   {columnas.map((item, index2) => (
@@ -228,27 +317,7 @@ function MoviePage() {
                   ))}
                 </div>
               ))}
-            </div>
-          </div>
-
-          {/* schedule section */}
-          <div className="w-auto px-10 flex flex-col justify-end">
-            <p className="text-3xl font-bold mb-3">Selecciona un horario</p>
-
-            {movie.schedules.map((item, index) => (
-              <div
-                key={index}
-                className={`rounded p-2 m-1 bg-gray-300 hover:text-white hover:bg-gray-900 hover:scale-110 cursor-pointer duration-75 ${getSelectedSchedule(
-                  `${item._id}`
-                )}`}
-                onClick={() => selectSchedule(`${item._id}`)}
-              >
-                <p>Costo: {movie.cost} creditos</p>
-                <p>Horario: {item.schedule}</p>
-                <p>Fecha: {dateFormat(item.date, "mmmm dS, yyyy")}</p>
-                <p>Sala: {item.cinema}</p>
-              </div>
-            ))}
+            </div> */}
           </div>
 
           {/* submit section */}
