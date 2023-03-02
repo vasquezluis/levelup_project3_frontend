@@ -76,7 +76,7 @@ function MainNavbar() {
               // onClick={() => setActiveMenu(false)}
               className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900"
             >
-              <RiMovie2Fill /> <span>Cines de Guatemala</span>
+              <RiMovie2Fill /> <span>PELISPELIS</span>
             </Link>
             {/* Boton para cerrar el sidebar */}
             <TooltipComponent content="menu" position="BottomCenter">
