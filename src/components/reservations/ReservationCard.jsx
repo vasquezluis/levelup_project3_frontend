@@ -1,4 +1,6 @@
 import dateFormat from "dateformat";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import ReservationsPDF from "./ReservationsPDF";
 
 function ReservationCard({
   moviePoster,
@@ -20,14 +22,40 @@ function ReservationCard({
         <p className="text-xs">Asientos:</p>
 
         {seats.map((item, index) => (
-          <span key={index} className="bg-gray-300 rounded-md px-1 mx-1 text-xs">
+          <span
+            key={index}
+            className="bg-gray-300 rounded-md px-1 mx-1 text-xs"
+          >
             {item}
           </span>
         ))}
       </div>
       <p className="text-xs font-bold">Horario: {schedule}</p>
-      <p className="text-xs font-bold">Fecha: {dateFormat(date, "shortDate")}</p>
+      <p className="text-xs font-bold">
+        Fecha: {dateFormat(date, "shortDate")}
+      </p>
       <p className="text-xs font-bold">Sala: {cinema}</p>
+      {/* pdf file */}
+      <div>
+        <PDFDownloadLink
+          document={
+            <ReservationsPDF
+              image={moviePoster}
+              title={movie}
+              totalCredits={totalCredits}
+              seats={seats}
+              schedule={schedule}
+              date={date}
+              cinema={cinema}
+            />
+          }
+          fileName={`${movie}-bill-${dateFormat(Date.now(), "shortDate")}.pdf`}
+        >
+          <button className="flex flex-col justify-end bg-gray-800 px-2 py-1 rounded text-white">
+            PDF
+          </button>
+        </PDFDownloadLink>
+      </div>
     </div>
   );
 }
