@@ -3,7 +3,7 @@ import axios from "../libs/axios.js";
 // axios instance
 
 const moviesAPI = axios.create({
-  baseURL: "http://ec2-52-15-71-160.us-east-2.compute.amazonaws.com/api/v1/movies",
+  baseURL: "https://pelispelis-backend.onrender.com/api/v1/movies",
 });
 
 /**
