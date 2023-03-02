@@ -5,7 +5,7 @@ import axios from "axios";
 // const { token } = useSelector((state) => state.user);
 
 const authAPI = axios.create({
-  baseURL: "ec2-52-15-71-160.us-east-2.compute.amazonaws.com/api/v1",
+  baseURL: "http://ec2-52-15-71-160.us-east-2.compute.amazonaws.com/api/v1",
   withCredentials: true,
 });
 
