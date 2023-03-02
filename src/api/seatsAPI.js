@@ -3,7 +3,7 @@ import axios from "../libs/axios.js";
 // axios instance
 
 const seatsAPI = axios.create({
-  baseURL: "http://localhost:3000/api/v1/seats",
+  baseURL: "ec2-52-15-71-160.us-east-2.compute.amazonaws.com/api/v1/seats",
 });
 
 /**
